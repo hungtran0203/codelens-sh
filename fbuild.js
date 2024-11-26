@@ -24,12 +24,9 @@ function findFjsFiles(directory, prefix) {
 		...findFjsFiles('.', 'rules'),
 		...findFjsFiles('fjs', 'rules')
 	];
-	console.log('filesfilesfilesfilesfiles', files);
 
 	const bundle = {};
 	for (const file of files) {
-		console.log(file);
-		console.log('filefilefilefile',file);
 		const mod = require(file);
 		Object.keys(mod).forEach(key => {
 			const fn = mod[key];
@@ -39,7 +36,6 @@ function findFjsFiles(directory, prefix) {
 			bundle[key] = fnStr;
 		});
 	}
-	console.log('mdasdbabsdasd', bundle);
 })();
 
 console.log('test');

@@ -58,6 +58,7 @@ function loadRules(context: ExtensionContext) {
 export function activate(context: ExtensionContext) {
 	const rules = loadRules(context);
 	const codelenCommands: CodeLenCommandsMap = {
+		...rules,
 		shell: function(ctx: CtxInterface) {
 			const { line } = ctx;
 			const terminal = selectTerminal();
@@ -66,7 +67,6 @@ export function activate(context: ExtensionContext) {
 				terminal.sendText(line.text);
 			}
 		},
-		...rules,
 	};
 	const codelensProvider = new CodelensProvider(rules);
 
