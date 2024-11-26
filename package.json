@@ -2,7 +2,7 @@
   "name": "codelens-sh",
   "displayName": "CodeLens for Shell Scripts",
   "description": "VS Code's CodeLens for Shell Scripts",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "publisher": "codelens-sh",
   "private": true,
   "license": "MIT",
