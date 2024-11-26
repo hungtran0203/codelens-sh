@@ -2,10 +2,8 @@ name: Build and Publish VSCode Extension
 
 on:
   push:
-    branches:
-      - releases/*
     tags:
-      - 'v*'
+      - 'v1.*'
 
 jobs:
   build-and-publish:
