@@ -47,7 +47,7 @@
     "compile": "tsc -p ./",
     "lint": "eslint",
     "watch": "tsc -watch -p ./",
-    "deploy": "npm version minor --no-git-tag-version && git add package.json && git commit -m \"chore: bump version to $(jq -r .version package.json)\" && git tag v$(jq -r .version package.json) && git push --follow-tags"
+    "deploy": "npm version minor --no-git-tag-version && git add package.json && git commit -m \"chore: bump version to $(jq -r .version package.json)\" && git tag v$(jq -r .version package.json) && git push --tags"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
