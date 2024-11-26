@@ -1,0 +1,5 @@
+module.exports = {
+	shell: (ctx) => {
+		console.log('running shell rule', 'ctx');
+	}
+}
