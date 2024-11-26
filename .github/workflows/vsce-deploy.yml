@@ -2,6 +2,8 @@ name: Build and Publish VSCode Extension
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*.*.*' # Matches version tags like v1.1.1
 
