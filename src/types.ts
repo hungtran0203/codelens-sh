@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { CodelensProvider } from './CodelensProvider';
 
 // tslint:disable-next-line: interface-name
 export type CodeLenCommandsMap = {
@@ -7,5 +8,6 @@ export type CodeLenCommandsMap = {
 
 export interface CtxInterface {
 	document: vscode.TextDocument;
-	line: vscode.TextLine;
+	line?: vscode.TextLine;
+	provider?: CodelensProvider;
 };

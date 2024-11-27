@@ -1,4 +1,3 @@
-import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -7,6 +6,8 @@ import * as path from 'path';
 import { ExtensionContext, languages, commands, Disposable, workspace } from 'vscode';
 import { CodelensProvider } from './CodelensProvider';
 import { CodeLenCommandsMap, CtxInterface } from './types';
+import defaultRules from './rules';
+import defaultProviders from './providers';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -33,10 +34,10 @@ for (const file of fjsFiles) {
 return rtn;
 }
 
-function loadRules(context: ExtensionContext) {
+function loadRules(context: ExtensionContext, type: string) {
 	const rulesFiles = [
-		...findFjsFiles(context.extensionPath, 'rules'),
-		...findFjsFiles(path.join(context.extensionPath, FJS_EXTENSION), 'rules'),
+		...findFjsFiles(context.extensionPath, type),
+		...findFjsFiles(path.join(context.extensionPath, FJS_EXTENSION), type),
 	];
 	const rules: CodeLenCommandsMap = {};
 
@@ -56,19 +57,16 @@ function loadRules(context: ExtensionContext) {
 }
 
 export function activate(context: ExtensionContext) {
-	const rules = loadRules(context);
 	const codelenCommands: CodeLenCommandsMap = {
-		...rules,
-		shell: function(ctx: CtxInterface) {
-			const { line } = ctx;
-			const terminal = selectTerminal();
-			if (terminal) {
-				terminal.show(true);
-				terminal.sendText(line.text);
-			}
-		},
+		...loadRules(context, 'rules'),
+		...defaultRules,
 	};
-	const codelensProvider = new CodelensProvider(rules);
+
+	const providers = {
+		...loadRules(context, 'providers'),
+		...defaultProviders,
+	};
+	const codelensProvider = new CodelensProvider(providers);
 
 	languages.registerCodeLensProvider("*", codelensProvider);
 
@@ -95,14 +93,3 @@ export function deactivate() {
 	}
 	disposables = [];
 }
-
-let NEXT_TERM_ID = 1;
-
-function selectTerminal(): vscode.Terminal {
-	if (vscode.window.terminals.length === 0) {
-		return vscode.window.createTerminal(`codelens #${NEXT_TERM_ID++}`);
-	}
-	const terminals = vscode.window.terminals;
-	return terminals[0];
-}
-
