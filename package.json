@@ -60,6 +60,8 @@
   },
   "dependencies": {
     "bash-parser": "0.5.0",
+    "sqlite-parser": "1.0.1",
+    "sql-parser-cst": "^0.30.0",
     "lodash": "^4.17.21"
   }
 }

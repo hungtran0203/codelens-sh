@@ -3,6 +3,7 @@ import { CtxInterface, CodeLenCommandsMap } from "./types";
 
 const _ = require('lodash');
 const bashParser = require('bash-parser');
+const sqlParser = require('sql-parser-cst');
 
 const codelenCommands: CodeLenCommandsMap = {
 	provide_shell: function(ctx: CtxInterface) {
@@ -63,7 +64,44 @@ const codelenCommands: CodeLenCommandsMap = {
 				}
 			}
 		}
-	}
+	},
+
+	provide_sql: function(ctx: CtxInterface) {
+		const { document, provider } = ctx;
+		if(['sql'].includes(document.languageId)) {
+			const text = document.getText();
+			const ast = sqlParser.parse(text, {
+				dialect: "sqlite",
+				includeRange: true, // Adds source code location data
+			});
+			console.log(ast);
+			for(const command of ast.statements) {
+				if(command.type === 'empty') {
+					continue;
+				}
+				const startLoc = command.range[0];
+				const endLoc = command.range[1];
+				const startLine = document.lineAt(document.positionAt(startLoc).line);
+				const endLine = document.lineAt(document.positionAt(endLoc).line);
+				const range = new vscode.Range(startLine.range.start, endLine.range.end);
+				if (range) {
+					const codeLens = new vscode.CodeLens(range);
+					const ctx = {
+						vscode,
+						document,
+						range,
+					};
+					codeLens.command = {
+						title: "Run SQL",
+						tooltip: "Run sql statement",
+						command: "codelens-sh.codelensAction",
+						arguments: [`sql`, ctx]
+					};
+					provider?.codeLenses.push(codeLens);
+				}
+			}
+		}
+	},
 };
 
 export default codelenCommands;
