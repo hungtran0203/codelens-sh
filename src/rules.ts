@@ -15,23 +15,24 @@ function selectTerminal(): vscode.Terminal {
 
 const codelenCommands: CodeLenCommandsMap = {
 	shell: function(ctx: CtxInterface) {
-		const { line } = ctx;
+		const { range } = ctx;
 		const terminal = selectTerminal();
-		if (terminal && line) {
+		if (terminal && range) {
+			const text = ctx.document.getText(range);
 			terminal.show(true);
-			terminal.sendText(line.text);
+			terminal.sendText(text);
 		}
 	},
 	npm: function(ctx: CtxInterface) {
-		const { line } = ctx;
+		const { range } = ctx;
 		const terminal = selectTerminal();
 
-		if (terminal && line) {
+		if (terminal && range) {
 			terminal.show(true);
-			const trimText = _.trim(_.trim(line.text), ',');
+			const text = ctx.document.getText(range);
+			const trimText = _.trim(_.trim(text), ',');
 			const cmdObj = JSON.parse("{" + trimText + "}");
 			const cmd = `npm run ${Object.keys(cmdObj)[0]}`;
-
 			terminal.sendText(cmd);
 		}
 	},

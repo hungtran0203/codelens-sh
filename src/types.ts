@@ -9,5 +9,6 @@ export type CodeLenCommandsMap = {
 export interface CtxInterface {
 	document: vscode.TextDocument;
 	line?: vscode.TextLine;
+	range?: vscode.Range;
 	provider?: CodelensProvider;
 };

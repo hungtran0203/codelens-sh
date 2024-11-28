@@ -21,6 +21,7 @@ export class CodelensProvider implements vscode.CodeLensProvider {
 
 	public provideCodeLenses(document: vscode.TextDocument, _token: vscode.CancellationToken): vscode.CodeLens[] | Thenable<vscode.CodeLens[]> {
 		if (vscode.workspace.getConfiguration("codelens-sh").get("enableCodeLens", true)) {
+			this.codeLenses = [];
 			const ctx = {
 				vscode,
 				document,
