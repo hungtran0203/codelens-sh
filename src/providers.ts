@@ -44,6 +44,7 @@ const codelenCommands: CodeLenCommandsMap = {
 			const dataJson = JSON.parse(text);
 			const scripts = dataJson.scripts;
 			if(scripts) {
+				console.log('scripts', _.keys(scripts));
 				for(const key in scripts) {
 					console.log('keykeykeykey', key, text.indexOf(key));
 					const line = document.lineAt(document.positionAt(text.indexOf(key)).line);

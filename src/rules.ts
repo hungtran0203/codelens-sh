@@ -17,7 +17,7 @@ const codelenCommands: CodeLenCommandsMap = {
 	shell: function(ctx: CtxInterface) {
 		const { line } = ctx;
 		const terminal = selectTerminal();
-		if (terminal) {
+		if (terminal && line) {
 			terminal.show(true);
 			terminal.sendText(line.text);
 		}
@@ -26,7 +26,7 @@ const codelenCommands: CodeLenCommandsMap = {
 		const { line } = ctx;
 		const terminal = selectTerminal();
 
-		if (terminal) {
+		if (terminal && line) {
 			terminal.show(true);
 			const trimText = _.trim(_.trim(line.text), ',');
 			const cmdObj = JSON.parse("{" + trimText + "}");
