@@ -59,9 +59,10 @@
     "typescript-eslint": "^8.11.0"
   },
   "dependencies": {
+    "@textlint/markdown-to-ast": "^14.4.0",
     "bash-parser": "0.5.0",
-    "sqlite-parser": "1.0.1",
+    "lodash": "^4.17.21",
     "sql-parser-cst": "^0.30.0",
-    "lodash": "^4.17.21"
+    "sqlite-parser": "1.0.1"
   }
 }

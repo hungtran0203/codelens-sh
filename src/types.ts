@@ -11,4 +11,5 @@ export interface CtxInterface {
 	line?: vscode.TextLine;
 	range?: vscode.Range;
 	provider?: CodelensProvider;
+	data?: string;
 };
